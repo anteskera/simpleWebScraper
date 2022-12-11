@@ -17,5 +17,21 @@ CREATE TABLE player(
 	current_appearances INTEGER DEFAULT 0,
 	current_club VARCHAR(255),
 	national_team VARCHAR(255),
-	national_team_apps INTEGER DEFAULT 0);
+	national_team_apps INTEGER DEFAULT 0,
+	last_modified TIMESTAMP);
 
+
+CREATE FUNCTION sync_lastmod() RETURNS trigger AS $$
+BEGIN
+  NEW.last_modified := NOW();
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER
+  sync_lastmod
+BEFORE UPDATE ON
+  player
+FOR EACH ROW EXECUTE PROCEDURE
+  sync_lastmod();
