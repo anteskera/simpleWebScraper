@@ -1,0 +1,11 @@
+backports.statistics==0.1.0
+beautifulsoup4==4.11.1
+Cython==0.29.32
+dl==0.1.0
+ipaddr==2.2.0
+keyring==23.4.0
+mypy_extensions==0.4.3
+numpy==1.21.5
+ordereddict==1.1
+psycopg2==2.9.4
+wincertstore==0.2.1
