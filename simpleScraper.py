@@ -1,6 +1,5 @@
 import re
 import sys
-import urllib3
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -78,8 +77,7 @@ def get_appearances_and_goals(data, club):
         return 0, 0
 
 
-url_file = open('playersURLs.csv', 'r')
-http = urllib3.PoolManager()
+url_file = open(sys.argv[1], 'r')
 unable_to_scrape = []
 unable_to_open = []
 tup = []
@@ -126,17 +124,14 @@ cur.executemany("INSERT INTO player (age,name, full_name, date_of_birth, city_of
                 "ON CONFLICT (url) DO UPDATE SET "
                 "(age, name, full_name, date_of_birth, city_of_birth, positions, current_club, "
                 "national_team, current_appearances, scraping_timestamp, country_of_birth, national_team_apps, "
-                "current_goals) = "
+                "current_goals, last_modified) = "
                 "(EXCLUDED.age, EXCLUDED.name, EXCLUDED.full_name, EXCLUDED.date_of_birth, EXCLUDED.city_of_birth, "
                 "EXCLUDED.positions, EXCLUDED.current_club, EXCLUDED.national_team, EXCLUDED.current_appearances, "
                 "EXCLUDED.scraping_timestamp, EXCLUDED.country_of_birth, EXCLUDED.national_team_apps, "
-                "EXCLUDED.current_goals)", tup)
+                "EXCLUDED.current_goals, EXCLUDED.last_modified)", tup)
 conn.commit()
 cur.close()
 conn.close()
 
 print(unable_to_scrape)
 print(unable_to_open)
-
-# id, name, full_name, url, date_of_birth, city_of_birth, country_of_birth, age, positions, scraping_timestamp,
-# current_goals, current_appearances, current_club, national_team

@@ -45,7 +45,6 @@ tup = []
 
 # Name;Full name;Date of birth;Age;City of birth;Country of birth;Position;Current club;National_team;Dead;No
 # data;PlayerID;URL
-# datume u format YYYY-MM-DD uuid provjerit s is_valid_uuid
 
 
 for line in csv_file.readlines()[1:]:
@@ -77,8 +76,7 @@ cur.executemany("INSERT INTO player (name, full_name, date_of_birth, age, city_o
                 "national_team, id, url) = "
                 "(EXCLUDED.name, EXCLUDED.full_name, EXCLUDED.date_of_birth, EXCLUDED.age, "
                 "EXCLUDED.city_of_birth, EXCLUDED.positions, EXCLUDED.country_of_birth, EXCLUDED.current_club, "
-                "EXCLUDED.national_team, EXCLUDED.id, EXCLUDED.url)", tup)  # maknut visak jer si glup
+                "EXCLUDED.national_team, EXCLUDED.id, EXCLUDED.url)", tup)
 conn.commit()
 cur.close()
 conn.close()
-#Name;Full name;Date of birth;Age;City of birth;Country of birth;Position;Current club;National_team;Dead;No data;PlayerID;URL
